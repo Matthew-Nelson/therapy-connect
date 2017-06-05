@@ -7,7 +7,7 @@ const
     //how to set up an array of times in a schema and have them activate at given times
     activationTimes: [{type: String}],
     // I want this to be an array of exercises that comprise one routine.
-    // exercises: [{type: mongoose.Schema.Types.ObjectId, ref: 'Exercise'}]
+    exercises: [{type: mongoose.Schema.Types.ObjectId, ref: 'Exercise'}]
   })
 
 const Routine = mongoose.model('Routine', routineSchema)

@@ -2,9 +2,27 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import clientAuth from './clientAuth'
-
+//import your components here
 
 class App extends Component {
+
+  constructor() {
+    super()
+    this.state = {
+      currentUser: null,
+      loggedIn: false
+    }
+  }
+
+  componentDidMount() {
+    const currentUser = clientAuth.getCurrentUser()
+    this.setState({
+      currentUser: currentUser,
+      loggedIn: !!currentUser
+    })
+  }
+
+
   render() {
     return (
       <div className="App">

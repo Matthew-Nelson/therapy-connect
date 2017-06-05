@@ -49,39 +49,32 @@ const clientAuth = {
     return new Promise((resolve) => {
       localStorage.clear()
       delete axios.defaults.headers.common['x-access-token']
-      resolve("bye.")
+      resolve("logging out")
     })
   },
 
 
   //the middleman between the front and the back
-  getTodos: () => {
+  getRoutines: () => {
     return axios({
-      url: '/api/todos',
+      url: '/api/routines',
       method: 'get'
     })
   },
 
-  addTodo: (newTodo) => {
+  addRoutine: (newRoutine) => {
     return axios({
-      url: '/api/todos',
+      url: '/api/routines',
       method: 'post',
-      data: newTodo
+      data: newRoutine
     })
   },
 
-  deleteTodo: (id) => {
+  deleteRoutine: (id) => {
     return axios({
       //fancy way of concating a string
-      url: `/api/todos/${id}`,
+      url: `/api/routines/${id}`,
       method: 'delete'
-    })
-  },
-
-  toggleCompleted: (id) => {
-    return axios({
-      url: `/api/todos/${id}`,
-      method: 'patch'
     })
   }
 }

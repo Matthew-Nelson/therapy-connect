@@ -1,6 +1,6 @@
 const
   jwt = require('jsonwebtoken'),
-  jwtSecret = process.env.JWT_SECRET || 'BOOMCHAKALAKA'
+  jwtSecret = process.env.JWT_SECRET || 'SECRET'
 
 const serverAuth = {
   // create a token that contains any data we want to put in it
