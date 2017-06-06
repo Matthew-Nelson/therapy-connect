@@ -21,6 +21,11 @@ routinesRouter.route('/')
   })
 
 routinesRouter.route('/:id')
+  .get((req, res) => {
+    Routine.findById(req.params.id, (err, routine) => {
+      res.json(routine)
+    })
+  })
   //this is only going to be adding exercises to a routine
   .post((req, res) => {
     Routine.findById(req.params.id, (err, routine) => {
@@ -46,7 +51,13 @@ routinesRouter.route('/:id')
 
 routinesRouter.route('/:routineId/exercises/:exerciseId')
   .delete((req, res) => {
-
+    Routine.findById(req.params.routineId, (err, routine) => {
+      var index = routine.exercises.indexOf(req.params.exerciseId)
+      routine.exercises.splice(index, 1)
+      routine.save((err, routine) => {
+        res.json({success: true, message: "exercise removed from routine", routine})
+      })
+    })
   })
 
 

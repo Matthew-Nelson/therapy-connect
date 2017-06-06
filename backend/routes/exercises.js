@@ -22,7 +22,10 @@ exercisesRouter.route('/')
 exercisesRouter.route('/:id')
   .patch((req, res) => {
     Exercise.findById(req.params.id, (err, exercise) => {
-      //how to patch a exercise
+      Object.assign(exercise, req.body)
+      exercise.save((err, exercise) => {
+        res.json({success: true, message: "exercise updated"})
+      })
     })
   })
   .delete((req, res) => {
