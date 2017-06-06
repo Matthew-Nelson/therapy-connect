@@ -7,7 +7,8 @@ module.exports = {
   show,
   create,
   update,
-  destroy
+  destroy,
+  assignTherapist
 }
 
 function index(req, res) {
@@ -50,5 +51,16 @@ function destroy(req, res) {
   User.findByIdAndRemove(req.params.id, (err, user) => {
     if(err) return console.log(err)
     res.json({success: true, message: "User deleted..."})
+  })
+}
+
+function assignTherapist(req, res) {
+  User.findById(req.params.therapistId, (err, therapist) => {
+    if(err) return console.log(err)
+    therapist.clients.push(req.params.userId)
+    therapist.save((err, therapist) => {
+      res.json({success: true, message: "client added to therpist's list"})
+    })
+
   })
 }

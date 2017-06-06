@@ -72,7 +72,7 @@ const clientAuth = {
 
   deleteRoutine: (id) => {
     return axios({
-      //fancy way of concating a string
+      //fancy way of interpolating a string
       url: `/api/routines/${id}`,
       method: 'delete'
     })

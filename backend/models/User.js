@@ -4,12 +4,10 @@ const
   userSchema = new mongoose.Schema({
     name: String,
     email: String,
-
-    // when 'select' is set to false, this field
-    // will not show up in queries by default:
-    password: {type: String, select: false}
-    // //similar to routines, I want an array of routines here
-    // routines: [{type: mongoose.Schema.Types.ObjectId, ref: 'Routine'}]
+    password: {type: String, select: false},
+    routines: [{type: mongoose.Schema.Types.ObjectId, ref: 'Routine'}],
+    isPt: {type: Boolean, default: false},
+    clients: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
   })
 
 // this function will take a string and encrypt it with bcrypt:
