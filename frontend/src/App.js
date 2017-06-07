@@ -102,7 +102,7 @@ class App extends Component {
     const clients = this.state.clients.map((client, i) => {
       console.log(client)
       return (
-        <option key={i}>
+        <option key={i} id={client._id}>
           {client.name}
         </option>
       )
@@ -143,7 +143,10 @@ class App extends Component {
                   <form>
                     <select id="clientName">
                       {clients}
-                    </select>
+                    </select><br></br>
+                    <textarea></textarea><br></br>
+                    <input type="date"></input><br></br>
+                    <input type="submit"></input><br></br>
                   </form>
 
                 </div>

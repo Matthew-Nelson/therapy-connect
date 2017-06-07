@@ -48,7 +48,7 @@ routinesRouter.route('/:id')
       res.json({success: true, message: "Routine deleted", routine})
     })
   })
-  
+
 routinesRouter.route('/:routineId/exercises/:exerciseId')
   .delete((req, res) => {
     Routine.findById(req.params.routineId, (err, routine) => {
