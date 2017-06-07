@@ -12,13 +12,13 @@ module.exports = {
 }
 
 function index(req, res) {
-  User.find({}, '-__v', (err, users) => {
+  User.find({}).populate('clients').exec((err, users) => {
     res.json(users)
   })
 }
 
 function show(req, res) {
-  User.findById(req.params.id, (err, user) => {
+  User.findById(req.params.id).populate('clients').exec((err, user) => {
     res.json(user)
   })
 }
@@ -55,9 +55,9 @@ function destroy(req, res) {
 }
 
 function assignTherapist(req, res) {
-  User.findById(req.params.therapistId, (err, therapist) => {
+  User.findById(req.params.id, (err, therapist) => {
     if(err) return console.log(err)
-    therapist.clients.push(req.params.userId)
+    therapist.clients.push(req.decoded._id)
     therapist.save((err, therapist) => {
       res.json({success: true, message: "client added to therpist's list"})
     })

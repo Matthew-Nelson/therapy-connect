@@ -1,6 +1,8 @@
-import React, { Component } from 'react';
-import './App.css';
+import React, { Component } from 'react'
+import './App.css'
 import clientAuth from './clientAuth'
+import LogIn from './Login'
+import SignUp from './Signup'
 //import your components here
 
 class App extends Component {
@@ -9,7 +11,8 @@ class App extends Component {
     super()
     this.state = {
       currentUser: null,
-      loggedIn: false
+      loggedIn: false,
+      clients: []
     }
   }
 
@@ -19,7 +22,16 @@ class App extends Component {
       currentUser: currentUser,
       loggedIn: !!currentUser,
       view: currentUser ? 'main' : 'home'
+      // clients: [...currentUser.clients]
     })
+    if(currentUser) {
+      clientAuth.getClients(currentUser._id)
+        .then(res => {
+          this.setState({
+            clients: res.data.clients
+          })
+        })
+    }
   }
 
   _signUp(newUser) {
@@ -33,13 +45,23 @@ class App extends Component {
 
   _logIn(credentials) {
     console.log(credentials)
-    clientAuth.logIn(credentials).then(user => {
-      this.setState({
-        currentUser: user,
-        loggedIn: true,
-        view: 'main'
+    clientAuth.logIn(credentials)
+      .then(user => {
+        this.setState({
+          currentUser: user,
+          loggedIn: true,
+          view: 'main'
+        })
+        return user
       })
-    })
+      .then(user => {
+        clientAuth.getClients(user._id)
+          .then(res => {
+            this.setState({
+              clients: res.data.clients
+            })
+          })
+      })
   }
 
   _logOut() {
@@ -67,8 +89,28 @@ class App extends Component {
     })
   }
 
+  _addPt(evt) {
+    evt.preventDefault()
+    clientAuth.addPt(this.refs.ptId.value).then(res => {
+      console.log(res)
+    })
+  }
+
   render() {
+
+
+    const clients = this.state.clients.map((client, i) => {
+      console.log(client)
+      return (
+        <option key={i}>
+          {client.name}
+        </option>
+      )
+    })
+    // console.log(clients);
+
     return (
+
       <div className="App">
         <div className="App-header">
           <h2>{this.state.loggedIn ? this.state.currentUser.name : 'Not Logged In'}</h2>
@@ -96,18 +138,24 @@ class App extends Component {
           {this.state.currentUser && (
             <div>
               <h2>Main info</h2>
-              {/* will load if PT */}
               {this.state.currentUser.isPt && (
                 <div id="isPT">
-                  <h3>i AM a pt</h3>
-                  <h3>{this.state.currentUser.isPt.toString()}</h3>
+                  <form>
+                    <select id="clientName">
+                      {clients}
+                    </select>
+                  </form>
+
                 </div>
               )}
-              {/* will load if not a PT */}
               {!this.state.currentUser.isPt && (
                 <div id="notPT">
                   <h3>im NOT a pt</h3>
                   <h3>{this.state.currentUser.isPt.toString()}</h3>
+                  <form onSubmit={this._addPt.bind(this)}>
+                    <input ref="ptId" type="text" placeholder="PT id"></input>
+                    <button type='submit'>Add pt</button>
+                  </form>
                 </div>
               )}
             </div>
@@ -118,61 +166,7 @@ class App extends Component {
   }
 }
 
-class SignUp extends Component {
-  _handleSignup(evt) {
-    evt.preventDefault()
-    const newUser = {
-      name: this.refs.name.value,
-      email: this.refs.email.value,
-      password: this.refs.password.value,
-      isPt: this.refs.isPt.checked
-
-    }
-    this.props.onSignup(newUser)
-  }
-
-  render() {
-    return (
-      <div className='container'>
-        <h2>Sign Up</h2>
-        <form onSubmit={this._handleSignup.bind(this)}>
-          Name: <input type='text' placeholder='Name' ref='name' /> <br></br>
-          Email: <input type='text' placeholder='Email' ref='email' /> <br></br>
-          Password: <input type='password' placeholder='Password' ref='password' /> <br></br>
-          Are you signing up as a therapist? <input type='radio' ref='isPt' /><br></br>
-          <button type='submit'>Create Account</button>
-        </form>
-      </div>
-    )
-  }
-}
-
-class LogIn extends Component {
-  _handleLogin(evt) {
-    evt.preventDefault()
-    const credentials = {
-      email: this.refs.email.value,
-      password: this.refs.password.value
-    }
-    this.props.onLogin(credentials)
-  }
-
-  render() {
-    return (
-      <div className='container'>
-        <h2>Log In</h2>
-        <form onSubmit={this._handleLogin.bind(this)}>
-          <input type='text' placeholder='Email' ref='email' />
-          <input type='password' placeholder='Password' ref='password' />
-          <button type='submit'>Log In</button>
-        </form>
-      </div>
-    )
-  }
-}
-
 class Main extends Component {
-  _
 
   render() {
     return (

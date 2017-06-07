@@ -45,6 +45,12 @@ const clientAuth = {
     return token ? jwt_decode(token) : null
   },
 
+  getClients: (id) => {
+    return axios({
+      url: `/api/users/${id}`
+    })
+  },
+
   logOut: () => {
     return new Promise((resolve) => {
       localStorage.clear()
@@ -75,6 +81,15 @@ const clientAuth = {
       //fancy way of interpolating a string
       url: `/api/routines/${id}`,
       method: 'delete'
+    })
+  },
+
+  addPt: (ptId) => {
+    // console.log(data.pt);
+    return axios({
+      // url: `/api/users/${data.user}/therapist/${data.pt}`,
+      url: `/api/users/${ptId}`,
+      method: 'post'
     })
   }
 }

@@ -6,6 +6,7 @@ const
     email: String,
     password: {type: String, select: false},
     routines: [{type: mongoose.Schema.Types.ObjectId, ref: 'Routine'}],
+    // routine: {type: mongoose.Schema.Types.ObjectId, ref: 'Routine'}, what it will be
     isPt: {type: Boolean, default: false},
     clients: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
   })

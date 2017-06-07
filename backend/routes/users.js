@@ -29,8 +29,9 @@ usersRouter.route('/:id')
   .get(usersCtrl.show)
   .patch(usersCtrl.update)
   .delete(usersCtrl.destroy)
-
-usersRouter.route('/:userId/therapist/:therapistId')
   .post(usersCtrl.assignTherapist)
+
+// usersRouter.route('/:userId/therapist/:therapistId')
+//   .patch(usersCtrl.assignTherapist)
 
 module.exports = usersRouter
