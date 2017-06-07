@@ -51,6 +51,13 @@ const clientAuth = {
     })
   },
 
+  getRoutine: (id) => {
+    return axios({
+      url: `/api/routines/${id}`,
+      method: 'get'
+    })
+  },
+
   logOut: () => {
     return new Promise((resolve) => {
       localStorage.clear()
@@ -93,11 +100,11 @@ const clientAuth = {
     })
   },
 
-  updateRoutine: (newRoutine, clientId) => {
+  updateRoutine: (clientId, routineId) => {
     return axios({
-      url: `/api/users/${clientId}/routine`,
+      url: `/api/users/${clientId}/routine/${routineId}`,
       method: 'post',
-      data: newRoutine
+      data: routineId
     })
   }
 }

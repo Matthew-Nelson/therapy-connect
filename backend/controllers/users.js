@@ -10,7 +10,8 @@ module.exports = {
   update,
   destroy,
   assignTherapist,
-  updateRoutine
+  updateRoutine,
+  getRoutine
 }
 
 function index(req, res) {
@@ -67,13 +68,20 @@ function assignTherapist(req, res) {
 }
 
 function updateRoutine(req, res) {
-  User.findById(req.params.id, (err, client) => {
+  User.findById(req.params.clientId, (err, client) => {
     if(err) return console.log(err)
-    const newRoutine = new Routine(req.body)
-    console.log(newRoutine);
-    client.routine = newRoutine
+    client.routine = req.params.routineId
     client.save((err, client) => {
       res.json({success: true, message: "client routine updated", client})
     })
+  })
+}
+
+function getRoutine(req, res) {
+  User.findById(req.params.clientid, (err, client) => {
+    //const foundRoutine = client.routine
+    //is error here?
+    //if(err) return console.log(err)
+    res.json({success: true, message: "heres your routine", client})
   })
 }

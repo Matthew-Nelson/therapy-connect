@@ -12,7 +12,8 @@ class App extends Component {
     this.state = {
       currentUser: null,
       loggedIn: false,
-      clients: []
+      clients: [],
+      routine: {}
     }
   }
 
@@ -22,15 +23,32 @@ class App extends Component {
       currentUser: currentUser,
       loggedIn: !!currentUser,
       view: currentUser ? 'main' : 'home'
-      // clients: [...currentUser.clients]
     })
     if(currentUser) {
+      console.log('FUCK THIS FIRST ' + currentUser.name);
       clientAuth.getClients(currentUser._id)
         .then(res => {
           this.setState({
             clients: res.data.clients
           })
         })
+    }
+    if(currentUser) {
+      console.log('FUCK THIS ' + currentUser.routine);
+      clientAuth.getRoutine(currentUser.routine)
+      .then(res => {
+        console.log(res.data);
+        const loadingRoutine = {
+          name: res.data.name,
+          body: res.data.body,
+          completeDate: res.data.completeDate,
+          id: res.data._id
+        }
+        this.setState({
+          routine: loadingRoutine
+        })
+      })
+      console.log(this.state.routine);
     }
   }
 
@@ -44,7 +62,6 @@ class App extends Component {
   }
 
   _logIn(credentials) {
-    console.log(credentials)
     clientAuth.logIn(credentials)
       .then(user => {
         this.setState({
@@ -61,6 +78,18 @@ class App extends Component {
               clients: res.data.clients
             })
           })
+        clientAuth.getRoutine(user.routine)
+          .then(res => {
+            const loadingRoutine = {
+              name: res.data.name,
+              body: res.data.body,
+              completeDate: res.data.completeDate,
+              id: res.data._id
+            }
+            this.setState({
+              routine: loadingRoutine
+            })
+          })
       })
   }
 
@@ -70,7 +99,8 @@ class App extends Component {
       this.setState({
         currentUser: null,
         loggedIn: false,
-        view: 'home'
+        view: 'home',
+        routine: {}
       })
     })
   }
@@ -104,11 +134,23 @@ class App extends Component {
       completeDate: this.refs.completeDate.value
     }
     const clientId = this.refs.client.id
-    clientAuth.updateRoutine(newRoutine, clientId)
+    clientAuth.addRoutine(newRoutine)
+      .then( res => {
+        const routineId = res.data.routine._id
+        clientAuth.updateRoutine(clientId, routineId)
+      })
+  }
+
+  _deleteRoutine(id) {
+    console.log(id)
+    clientAuth.deleteRoutine(id).then((res) => {
+      this.setState({
+        routine: {}
+      })
+    })
   }
 
   render() {
-
 
     const clients = this.state.clients.map((client, i) => {
       return (
@@ -117,13 +159,16 @@ class App extends Component {
         </option>
       )
     })
-    // console.log(clients);
+
+    const routine = this.state.routine
+    console.log('routine thats live ' + this.state.routine.name)
 
     return (
 
       <div className="App">
         <div className="App-header">
           <h2>{this.state.loggedIn ? this.state.currentUser.name : 'Not Logged In'}</h2>
+          <h3>{this.state.loggedIn ? this.state.currentUser._id : "Not logged in"}</h3>
         </div>
         <ul>
           {/* if we are not logged in, render the list item */}
@@ -170,6 +215,10 @@ class App extends Component {
                     <input ref="ptId" type="text" placeholder="PT id"></input>
                     <button type='submit'>Add pt</button>
                   </form>
+                  <h3>routine name: {routine.name}</h3>
+                  <h3>routine date: {routine.completeDate}</h3>
+                  <p>routine body: {routine.body}</p>
+                  <button onClick={this._deleteRoutine.bind(this, routine.id)}>x</button>
                 </div>
               )}
             </div>
