@@ -31,6 +31,9 @@ usersRouter.route('/:id')
   .delete(usersCtrl.destroy)
   .post(usersCtrl.assignTherapist)
 
+usersRouter.route('/:id/routine')
+  .post(usersCtrl.updateRoutine)
+
 // usersRouter.route('/:userId/therapist/:therapistId')
 //   .patch(usersCtrl.assignTherapist)
 

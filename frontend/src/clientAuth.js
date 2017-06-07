@@ -91,6 +91,14 @@ const clientAuth = {
       url: `/api/users/${ptId}`,
       method: 'post'
     })
+  },
+
+  updateRoutine: (newRoutine, clientId) => {
+    return axios({
+      url: `/api/users/${clientId}/routine`,
+      method: 'post',
+      data: newRoutine
+    })
   }
 }
 

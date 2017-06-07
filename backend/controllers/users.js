@@ -1,5 +1,6 @@
 const
   User = require('../models/User.js')
+  Routine = require('../models/Routine.js')
   serverAuth = require('../config/serverAuth.js')
 
 module.exports = {
@@ -8,7 +9,8 @@ module.exports = {
   create,
   update,
   destroy,
-  assignTherapist
+  assignTherapist,
+  updateRoutine
 }
 
 function index(req, res) {
@@ -61,6 +63,17 @@ function assignTherapist(req, res) {
     therapist.save((err, therapist) => {
       res.json({success: true, message: "client added to therpist's list"})
     })
+  })
+}
 
+function updateRoutine(req, res) {
+  User.findById(req.params.id, (err, client) => {
+    if(err) return console.log(err)
+    const newRoutine = new Routine(req.body)
+    console.log(newRoutine);
+    client.routine = newRoutine
+    client.save((err, client) => {
+      res.json({success: true, message: "client routine updated", client})
+    })
   })
 }

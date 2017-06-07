@@ -96,13 +96,23 @@ class App extends Component {
     })
   }
 
+  _updateRoutine(evt) {
+    evt.preventDefault()
+    const newRoutine = {
+      name: this.refs.name.value,
+      body: this.refs.body.value,
+      completeDate: this.refs.completeDate.value
+    }
+    const clientId = this.refs.client.id
+    clientAuth.updateRoutine(newRoutine, clientId)
+  }
+
   render() {
 
 
     const clients = this.state.clients.map((client, i) => {
-      console.log(client)
       return (
-        <option key={i} id={client._id}>
+        <option ref='client' key={i} id={client._id}>
           {client.name}
         </option>
       )
@@ -141,12 +151,13 @@ class App extends Component {
               {this.state.currentUser.isPt && (
                 <div id="isPT">
                   <form>
-                    <select id="clientName">
+                    Client: <select id="clientName">
                       {clients}
                     </select><br></br>
-                    <textarea></textarea><br></br>
-                    <input type="date"></input><br></br>
-                    <input type="submit"></input><br></br>
+                    Name: <input ref="name" type="text" placeholder="Routine Name"></input><br></br>
+                    Body: <textarea ref="body" placeholder="Routine Details"></textarea><br></br>
+                    Date: <input ref="completeDate" type="date"></input><br></br>
+                    <input type="submit" onClick={this._updateRoutine.bind(this)}></input><br></br>
                   </form>
 
                 </div>
