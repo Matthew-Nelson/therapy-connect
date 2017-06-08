@@ -22,3 +22,16 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.directions-title{
+  font-size: 30px;
+
+}
+
+.directions-content{
+  font-size: 24px;
+}
+
+.directions-title .directions-content{
+  margin: 10px;
+}

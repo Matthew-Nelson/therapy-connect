@@ -21,6 +21,7 @@ class App extends Component {
 
   componentDidMount() {
     const currentUser = clientAuth.getCurrentUser()
+    console.log(currentUser);
     this.setState({
       currentUser: currentUser,
       loggedIn: !!currentUser,
@@ -39,6 +40,7 @@ class App extends Component {
       console.log('FUCK THIS ' + currentUser.routine);
       clientAuth.getRoutine(currentUser.routine)
       .then(res => {
+        console.log(res);
         console.log(res.data)
         if(res.data){
           const loadingRoutine = {
@@ -142,10 +144,15 @@ class App extends Component {
       body: this.refs.body.value,
       completeDate: this.refs.completeDate.value
     }
-    const clientId = this.refs.client.id
+    const dropdown = this.refs.client
+    const clientId = dropdown.options[dropdown.selectedIndex].id
+    console.log(clientId);
     clientAuth.addRoutine(newRoutine)
       .then( res => {
+        console.log(res);
         const routineId = res.data.routine._id
+        console.log(clientId + " " + routineId);
+
         clientAuth.updateRoutine(clientId, routineId)
       })
     form.reset()
@@ -164,8 +171,8 @@ class App extends Component {
 
     const clients = this.state.clients.map((client, i) => {
       return (
-        <option ref='client' key={i} id={client._id}>
-          {client.name}
+        <option key={i} id={client._id}>
+          {client.name + " " + client._id}
         </option>
       )
     })
@@ -185,11 +192,9 @@ class App extends Component {
             </Navbar.Header>
             <Nav pullRight>
               <ButtonGroup>
-                {/* if we are not logged in, render the list item */}
                 {!this.state.loggedIn && (
                   <Button type="button" bsStyle="warning" className="btn btn-lg" name='signup' onClick={this._setView.bind(this)}>Sign Up</Button>
                 )}
-                {/* cant put two items into one conditional because you can only return one element in a jsx */}
                 {!this.state.loggedIn && (
                   <Button type="button" bsStyle="info" className="btn btn-lg" name='login' onClick={this._setView.bind(this)}>Log In</Button>
                 )}
@@ -213,18 +218,11 @@ class App extends Component {
           <h2>{this.state.loggedIn ? this.state.currentUser._id : ""}</h2>
           {this.state.currentUser && (
             <div>
-              <div id="directions">
-                {this.state.currentUser ? (
-                  this.state.currentUser.isPt ? (
-                    <h1>Hello, im logged in and a pt</h1>
-                  ) : (<h1>Im logged in but not a pt</h1>)
-                ) : <h1>Im not logged in</h1>}
-              </div>
               <h2>Main</h2>
               {this.state.currentUser.isPt && (
                 <div id="isPT">
                   <form id="ptForm">
-                    Client: <select id="clientName">
+                    Client: <select ref="client" id="clientName">
                       {clients}
                     </select><br></br>
                     Name: <input ref="name" type="text" placeholder="Routine Name"></input><br></br>
@@ -232,7 +230,6 @@ class App extends Component {
                     Date: <input ref="completeDate" type="date"></input><br></br>
                     <input type="submit" onClick={this._updateRoutine.bind(this)}></input><br></br>
                   </form>
-
                 </div>
               )}
               {!this.state.currentUser.isPt && (
@@ -270,7 +267,6 @@ class Main extends Component {
   render() {
     return (
       <div className='container'>
-
       </div>
     )
   }

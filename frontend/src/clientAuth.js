@@ -66,8 +66,6 @@ const clientAuth = {
     })
   },
 
-
-  //the middleman between the front and the back
   getRoutines: () => {
     return axios({
       url: '/api/routines',
@@ -103,8 +101,8 @@ const clientAuth = {
   updateRoutine: (clientId, routineId) => {
     return axios({
       url: `/api/users/${clientId}/routine/${routineId}`,
-      method: 'post',
-      data: routineId
+      method: 'post'
+      // data: routineId
     })
   }
 }

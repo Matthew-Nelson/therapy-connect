@@ -72,7 +72,7 @@ function updateRoutine(req, res) {
     if(err) return console.log(err)
     client.routine = req.params.routineId
     client.save((err, client) => {
-      res.json({success: true, message: "client routine updated", client})
+      res.json({success: true, message: "client routine updated" + client.routine, client})
     })
   })
 }
