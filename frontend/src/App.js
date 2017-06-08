@@ -37,16 +37,18 @@ class App extends Component {
       console.log('FUCK THIS ' + currentUser.routine);
       clientAuth.getRoutine(currentUser.routine)
       .then(res => {
-        console.log(res.data);
-        const loadingRoutine = {
-          name: res.data.name,
-          body: res.data.body,
-          completeDate: res.data.completeDate,
-          id: res.data._id
+        console.log(res.data)
+        if(res.data){
+          const loadingRoutine = {
+            name: res.data.name,
+            body: res.data.body,
+            completeDate: res.data.completeDate,
+            id: res.data._id
+          }
+          this.setState({
+            routine: loadingRoutine
+          })
         }
-        this.setState({
-          routine: loadingRoutine
-        })
       })
       console.log(this.state.routine);
     }
@@ -80,15 +82,17 @@ class App extends Component {
           })
         clientAuth.getRoutine(user.routine)
           .then(res => {
-            const loadingRoutine = {
-              name: res.data.name,
-              body: res.data.body,
-              completeDate: res.data.completeDate,
-              id: res.data._id
+            if(res.data){
+              const loadingRoutine = {
+                name: res.data.name,
+                body: res.data.body,
+                completeDate: res.data.completeDate,
+                id: res.data._id
+              }
+              this.setState({
+                routine: loadingRoutine
+              })
             }
-            this.setState({
-              routine: loadingRoutine
-            })
           })
       })
   }
@@ -128,6 +132,7 @@ class App extends Component {
 
   _updateRoutine(evt) {
     evt.preventDefault()
+    const form = document.getElementById("ptForm")
     const newRoutine = {
       name: this.refs.name.value,
       body: this.refs.body.value,
@@ -139,6 +144,7 @@ class App extends Component {
         const routineId = res.data.routine._id
         clientAuth.updateRoutine(clientId, routineId)
       })
+    form.reset()
   }
 
   _deleteRoutine(id) {
@@ -192,10 +198,10 @@ class App extends Component {
         <div className="Main">
           {this.state.currentUser && (
             <div>
-              <h2>Main info</h2>
+              <h2>Main</h2>
               {this.state.currentUser.isPt && (
                 <div id="isPT">
-                  <form>
+                  <form id="ptForm">
                     Client: <select id="clientName">
                       {clients}
                     </select><br></br>
@@ -212,13 +218,23 @@ class App extends Component {
                   <h3>im NOT a pt</h3>
                   <h3>{this.state.currentUser.isPt.toString()}</h3>
                   <form onSubmit={this._addPt.bind(this)}>
+                    <p>add yourself to your PT's client list</p>
                     <input ref="ptId" type="text" placeholder="PT id"></input>
                     <button type='submit'>Add pt</button>
                   </form>
-                  <h3>routine name: {routine.name}</h3>
-                  <h3>routine date: {routine.completeDate}</h3>
-                  <p>routine body: {routine.body}</p>
-                  <button onClick={this._deleteRoutine.bind(this, routine.id)}>x</button>
+                  {this.state.routine.name && (
+                    <div>
+                      <h3>routine name: {routine.name}</h3>
+                      <h3>routine date: {routine.completeDate}</h3>
+                      <p>routine body: {routine.body}</p>
+                      <button onClick={this._deleteRoutine.bind(this, routine.id)}>x</button>
+                    </div>
+                  )}
+                  {!this.state.routine.name && (
+                    <div>
+                      <h3>congrats. you dont have to work your fatass out</h3>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
@@ -234,7 +250,7 @@ class Main extends Component {
   render() {
     return (
       <div className='container'>
-        <h2>Main</h2>
+
       </div>
     )
   }
