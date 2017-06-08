@@ -3,6 +3,7 @@ import './App.css'
 import clientAuth from './clientAuth'
 import LogIn from './Login'
 import SignUp from './Signup'
+import { Button, ButtonGroup, Navbar } from 'react-bootstrap';
 //import your components here
 
 class App extends Component {
@@ -125,9 +126,11 @@ class App extends Component {
 
   _addPt(evt) {
     evt.preventDefault()
+    const form = document.getElementById("notPtForm")
     clientAuth.addPt(this.refs.ptId.value).then(res => {
       console.log(res)
     })
+    form.style.display = "none"
   }
 
   _updateRoutine(evt) {
@@ -172,23 +175,30 @@ class App extends Component {
     return (
 
       <div className="App">
+        <Navbar>
+          <Navbar.Header>
+            <Navbar.Brand>
+              <h1>Therapy Connect</h1>
+            </Navbar.Brand>
+          </Navbar.Header>
+        </Navbar>
         <div className="App-header">
           <h2>{this.state.loggedIn ? this.state.currentUser.name : 'Not Logged In'}</h2>
           <h3>{this.state.loggedIn ? this.state.currentUser._id : "Not logged in"}</h3>
         </div>
-        <ul>
+        <ButtonGroup>
           {/* if we are not logged in, render the list item */}
           {!this.state.loggedIn && (
-            <li><button name='signup' onClick={this._setView.bind(this)}>Sign Up</button></li>
+            <Button type="button" bsStyle="success" className="btn btn-lg" name='signup' onClick={this._setView.bind(this)}>Sign Up</Button>
           )}
           {/* cant put two items into one conditional because you can only return one element in a jsx */}
           {!this.state.loggedIn && (
-            <li><button name='login' onClick={this._setView.bind(this)}>Log In</button></li>
+            <Button type="button" bsStyle="success" className="btn btn-lg" name='login' onClick={this._setView.bind(this)}>Log In</Button>
           )}
           {this.state.loggedIn && (
-            <li><button onClick={this._logOut.bind(this)}>Log Out</button></li>
+            <Button type="button" bsStyle="success" className="btn btn-lg" onClick={this._logOut.bind(this)}>Log Out</Button>
           )}
-        </ul>
+        </ButtonGroup>
         {{
           home: <h1>The Home View</h1>,
           login: <LogIn onLogin={this._logIn.bind(this)} />,
@@ -201,6 +211,7 @@ class App extends Component {
               <h2>Main</h2>
               {this.state.currentUser.isPt && (
                 <div id="isPT">
+                  <h3>{this.state.currentUser.isPt.toString()}</h3>
                   <form id="ptForm">
                     Client: <select id="clientName">
                       {clients}
@@ -215,19 +226,18 @@ class App extends Component {
               )}
               {!this.state.currentUser.isPt && (
                 <div id="notPT">
-                  <h3>im NOT a pt</h3>
                   <h3>{this.state.currentUser.isPt.toString()}</h3>
-                  <form onSubmit={this._addPt.bind(this)}>
+                  <form id="notPtForm" onSubmit={this._addPt.bind(this)}>
                     <p>add yourself to your PT's client list</p>
                     <input ref="ptId" type="text" placeholder="PT id"></input>
-                    <button type='submit'>Add pt</button>
+                    <Button className="btn btn-lg" type='submit'>Add pt</Button>
                   </form>
                   {this.state.routine.name && (
                     <div>
                       <h3>routine name: {routine.name}</h3>
                       <h3>routine date: {routine.completeDate}</h3>
                       <p>routine body: {routine.body}</p>
-                      <button onClick={this._deleteRoutine.bind(this, routine.id)}>x</button>
+                      <Button type="button" className="btn btn-lg" onClick={this._deleteRoutine.bind(this, routine.id)}>x</Button>
                     </div>
                   )}
                   {!this.state.routine.name && (
