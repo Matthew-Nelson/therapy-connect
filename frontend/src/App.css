@@ -45,3 +45,21 @@
   background-color: #efefef;
   text-align: left;
 }
+
+.jumbotron {
+  margin-left: 30px;
+  margin-right: 30px;
+  border-radius: 10px;
+  text-align: left;
+  padding: 50px;
+  font-size: 20px;
+}
+
+textarea {
+  width: 400px;
+  height: 200px;
+}
+
+#create-routine {
+  margin: 100px 0 100px 0;
+}

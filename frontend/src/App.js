@@ -4,7 +4,7 @@ import clientAuth from './clientAuth'
 import Home from './Home'
 import LogIn from './Login'
 import SignUp from './Signup'
-import { Button, ButtonGroup, Navbar, Nav, FormGroup, FormControl, Radio, ControlLabel } from 'react-bootstrap'
+import { Button, ButtonGroup, Navbar, Nav, ControlLabel, Jumbotron, Grid, Col, Row } from 'react-bootstrap'
 //import your components here
 
 class App extends Component {
@@ -195,13 +195,13 @@ class App extends Component {
             <Nav pullRight>
               <ButtonGroup>
                 {!this.state.loggedIn && (
-                  <Button type="button" bsStyle="primary" className="btn btn-lg" name='signup' onClick={this._setView.bind(this)}>Sign Up</Button>
+                  <Button type="button" bsStyle="warning" className="btn btn-lg" name='signup' onClick={this._setView.bind(this)}>Sign Up</Button>
                 )}
                 {!this.state.loggedIn && (
-                  <Button type="button" bsStyle="primary" className="btn btn-lg" name='login' onClick={this._setView.bind(this)}>Log In</Button>
+                  <Button type="button" bsStyle="warning" className="btn btn-lg" name='login' onClick={this._setView.bind(this)}>Log In</Button>
                 )}
                 {this.state.loggedIn && (
-                  <Button type="button" bsStyle="primary" className="btn btn-lg" onClick={this._logOut.bind(this)}>Log Out</Button>
+                  <Button type="button" bsStyle="warning" className="btn btn-lg" onClick={this._logOut.bind(this)}>Log Out</Button>
                 )}
               </ButtonGroup>
             </Nav>
@@ -220,47 +220,54 @@ class App extends Component {
           <h2>{this.state.loggedIn ? this.state.currentUser._id : ""}</h2>
           {this.state.currentUser && (
             <div>
-              <h2>Main</h2>
               {this.state.currentUser.isPt && (
 
 
 
                 <div id="isPT">
-                  <form id="ptForm">
-
-                    <ControlLabel>Client</ControlLabel>
-                    {/* <FormGroup>
-                      <FormControl ref="client" componentClass="select" placeholder="select">
-                        {clients}
-                      </FormControl>
-                    </FormGroup> */}
-                    <ControlLabel>Routine Name</ControlLabel>
-
-                    <select ref="client" id="clientName">
-                      {clients}
-                    </select><br></br>
-                    {/* <FormControl
-                      ref="name"
-                      type="text"
-                      label="Name"
-                      placeholder="Routine Name"
-                    />
-                    <FormGroup>
-                      <ControlLabel>Routine Details</ControlLabel>
-                      <FormControl ref="body" componentClass="textarea" placeholder="ROUTINE DETAILS" />
-                    </FormGroup> */}
 
 
 
-                    <input ref="name" type="text" placeholder="Routine Name"></input><br></br>
-                    Body: <textarea ref="body" placeholder="Routine Details"></textarea><br></br>
-                    Date: <input ref="completeDate" type="date"></input><br></br>
-                    <Button type="submit" onClick={this._updateRoutine.bind(this)}>Create Routine</Button><br></br>
-                  </form>
+
+
+                  <Jumbotron className="jumbotron">
+                    <form id="ptForm">
+                      <Grid>
+                        <Row className="show-grid">
+                          <Col md={4}>
+                            <div>
+                              <label>Select Client</label><br></br>
+                              <select ref="client" id="clientName">
+                                {clients}
+                              </select><br></br><br></br>
+                            </div>
+                          </Col>
+                          <Col md={4}>
+                            <div>
+                              <label>Routine Name</label><br></br>
+                              <input ref="name" type="text" placeholder="Routine Name"></input><br></br><br></br>
+                            </div>
+                          </Col>
+                          <Col md={4}>
+                            <div>
+                              <label>Date</label><br></br>
+                              <input ref="completeDate" type="date"></input><br></br><br></br>
+                            </div>
+                          </Col>
+                        </Row>
+                        <Row className="show-grid">
+                          <Col md={8}>
+                            <label>Body</label><br></br>
+                            <textarea ref="body" placeholder="Routine Details" ></textarea><br></br><br></br>
+                          </Col>
+                          <Col md={4}>
+                            <Button id="create-routine" className="btn btn-lg" bsStyle="warning" type="submit" onClick={this._updateRoutine.bind(this)}>Create Routine</Button><br></br>
+                          </Col>
+                        </Row>
+                      </Grid>
+                    </form>
+                  </Jumbotron>
                 </div>
-
-
-
               )}
               {!this.state.currentUser.isPt && (
                 <div id="notPT">
@@ -294,9 +301,6 @@ class App extends Component {
             </div>
           )}
         </div>
-        {/* <div className='footer'>
-          Matt Nelson 2017
-        </div> */}
       </div>
     )
   }
