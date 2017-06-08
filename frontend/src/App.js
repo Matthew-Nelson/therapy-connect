@@ -4,7 +4,7 @@ import clientAuth from './clientAuth'
 import Home from './Home'
 import LogIn from './Login'
 import SignUp from './Signup'
-import { Button, ButtonGroup, Navbar, Nav } from 'react-bootstrap'
+import { Button, ButtonGroup, Navbar, Nav, FormGroup, FormControl, Radio, ControlLabel } from 'react-bootstrap'
 //import your components here
 
 class App extends Component {
@@ -49,9 +49,11 @@ class App extends Component {
             completeDate: res.data.completeDate,
             id: res.data._id
           }
+          console.log(loadingRoutine);
           this.setState({
             routine: loadingRoutine
           })
+          console.log(this.state.routine);
         }
       })
       console.log(this.state.routine);
@@ -146,7 +148,7 @@ class App extends Component {
     }
     const dropdown = this.refs.client
     const clientId = dropdown.options[dropdown.selectedIndex].id
-    console.log(clientId);
+    console.log(clientId)
     clientAuth.addRoutine(newRoutine)
       .then( res => {
         console.log(res);
@@ -193,13 +195,13 @@ class App extends Component {
             <Nav pullRight>
               <ButtonGroup>
                 {!this.state.loggedIn && (
-                  <Button type="button" bsStyle="warning" className="btn btn-lg" name='signup' onClick={this._setView.bind(this)}>Sign Up</Button>
+                  <Button type="button" bsStyle="primary" className="btn btn-lg" name='signup' onClick={this._setView.bind(this)}>Sign Up</Button>
                 )}
                 {!this.state.loggedIn && (
-                  <Button type="button" bsStyle="info" className="btn btn-lg" name='login' onClick={this._setView.bind(this)}>Log In</Button>
+                  <Button type="button" bsStyle="primary" className="btn btn-lg" name='login' onClick={this._setView.bind(this)}>Log In</Button>
                 )}
                 {this.state.loggedIn && (
-                  <Button type="button" bsStyle="success" className="btn btn-lg" onClick={this._logOut.bind(this)}>Log Out</Button>
+                  <Button type="button" bsStyle="primary" className="btn btn-lg" onClick={this._logOut.bind(this)}>Log Out</Button>
                 )}
               </ButtonGroup>
             </Nav>
@@ -220,17 +222,45 @@ class App extends Component {
             <div>
               <h2>Main</h2>
               {this.state.currentUser.isPt && (
+
+
+
                 <div id="isPT">
                   <form id="ptForm">
-                    Client: <select ref="client" id="clientName">
+
+                    <ControlLabel>Client</ControlLabel>
+                    {/* <FormGroup>
+                      <FormControl ref="client" componentClass="select" placeholder="select">
+                        {clients}
+                      </FormControl>
+                    </FormGroup> */}
+                    <ControlLabel>Routine Name</ControlLabel>
+
+                    <select ref="client" id="clientName">
                       {clients}
                     </select><br></br>
-                    Name: <input ref="name" type="text" placeholder="Routine Name"></input><br></br>
+                    {/* <FormControl
+                      ref="name"
+                      type="text"
+                      label="Name"
+                      placeholder="Routine Name"
+                    />
+                    <FormGroup>
+                      <ControlLabel>Routine Details</ControlLabel>
+                      <FormControl ref="body" componentClass="textarea" placeholder="ROUTINE DETAILS" />
+                    </FormGroup> */}
+
+
+
+                    <input ref="name" type="text" placeholder="Routine Name"></input><br></br>
                     Body: <textarea ref="body" placeholder="Routine Details"></textarea><br></br>
                     Date: <input ref="completeDate" type="date"></input><br></br>
-                    <input type="submit" onClick={this._updateRoutine.bind(this)}></input><br></br>
+                    <Button type="submit" onClick={this._updateRoutine.bind(this)}>Create Routine</Button><br></br>
                   </form>
                 </div>
+
+
+
               )}
               {!this.state.currentUser.isPt && (
                 <div id="notPT">
@@ -243,7 +273,14 @@ class App extends Component {
                     <div>
                       <h3>routine name: {routine.name}</h3>
                       <h3>routine date: {routine.completeDate}</h3>
-                      <p>routine body: {routine.body}</p>
+                      <div>
+                        <p className="rr">routine body: <br></br>{routine.body}</p>
+                        <style>{"\
+                          .rr{\
+                            white-space: pre-wrap;\
+                          }\
+                        "}</style>
+                      </div>
                       <Button type="button" className="btn btn-lg" onClick={this._deleteRoutine.bind(this, routine.id)}>x</Button>
                     </div>
                   )}
@@ -257,6 +294,9 @@ class App extends Component {
             </div>
           )}
         </div>
+        {/* <div className='footer'>
+          Matt Nelson 2017
+        </div> */}
       </div>
     )
   }
