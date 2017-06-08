@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import './App.css'
 import clientAuth from './clientAuth'
+import Home from './Home'
 import LogIn from './Login'
 import SignUp from './Signup'
-import { Button, ButtonGroup, Navbar } from 'react-bootstrap';
+import { Button, ButtonGroup, Navbar, Nav } from 'react-bootstrap'
 //import your components here
 
 class App extends Component {
@@ -175,43 +176,53 @@ class App extends Component {
     return (
 
       <div className="App">
-        <Navbar>
-          <Navbar.Header>
-            <Navbar.Brand>
-              <h1>Therapy Connect</h1>
-            </Navbar.Brand>
-          </Navbar.Header>
-        </Navbar>
-        <div className="App-header">
-          <h2>{this.state.loggedIn ? this.state.currentUser.name : 'Not Logged In'}</h2>
-          <h3>{this.state.loggedIn ? this.state.currentUser._id : "Not logged in"}</h3>
+        <div className="navbar">
+          <Navbar>
+            <Navbar.Header>
+              <Navbar.Brand>
+                <a>Therapy Connect</a>
+              </Navbar.Brand>
+            </Navbar.Header>
+            <Nav pullRight>
+              <ButtonGroup>
+                {/* if we are not logged in, render the list item */}
+                {!this.state.loggedIn && (
+                  <Button type="button" bsStyle="warning" className="btn btn-lg" name='signup' onClick={this._setView.bind(this)}>Sign Up</Button>
+                )}
+                {/* cant put two items into one conditional because you can only return one element in a jsx */}
+                {!this.state.loggedIn && (
+                  <Button type="button" bsStyle="info" className="btn btn-lg" name='login' onClick={this._setView.bind(this)}>Log In</Button>
+                )}
+                {this.state.loggedIn && (
+                  <Button type="button" bsStyle="success" className="btn btn-lg" onClick={this._logOut.bind(this)}>Log Out</Button>
+                )}
+              </ButtonGroup>
+            </Nav>
+          </Navbar>
         </div>
-        <ButtonGroup>
-          {/* if we are not logged in, render the list item */}
-          {!this.state.loggedIn && (
-            <Button type="button" bsStyle="success" className="btn btn-lg" name='signup' onClick={this._setView.bind(this)}>Sign Up</Button>
-          )}
-          {/* cant put two items into one conditional because you can only return one element in a jsx */}
-          {!this.state.loggedIn && (
-            <Button type="button" bsStyle="success" className="btn btn-lg" name='login' onClick={this._setView.bind(this)}>Log In</Button>
-          )}
-          {this.state.loggedIn && (
-            <Button type="button" bsStyle="success" className="btn btn-lg" onClick={this._logOut.bind(this)}>Log Out</Button>
-          )}
-        </ButtonGroup>
         {{
-          home: <h1>The Home View</h1>,
+          home: <Home/>,
           login: <LogIn onLogin={this._logIn.bind(this)} />,
           signup: <SignUp onSignup={this._signUp.bind(this)} />,
+          // edit: <Edit onEditUser={this._editUser.bind(this)} />,
+          //edit isnt anywhere yet
           main: <Main onMain={this._main.bind(this)} />
         }[this.state.view]}
         <div className="Main">
+          <h2>{this.state.loggedIn ? this.state.currentUser.name : ""}</h2>
+          <h2>{this.state.loggedIn ? this.state.currentUser._id : ""}</h2>
           {this.state.currentUser && (
             <div>
+              <div id="directions">
+                {this.state.currentUser ? (
+                  this.state.currentUser.isPt ? (
+                    <h1>Hello, im logged in and a pt</h1>
+                  ) : (<h1>Im logged in but not a pt</h1>)
+                ) : <h1>Im not logged in</h1>}
+              </div>
               <h2>Main</h2>
               {this.state.currentUser.isPt && (
                 <div id="isPT">
-                  <h3>{this.state.currentUser.isPt.toString()}</h3>
                   <form id="ptForm">
                     Client: <select id="clientName">
                       {clients}
@@ -226,7 +237,6 @@ class App extends Component {
               )}
               {!this.state.currentUser.isPt && (
                 <div id="notPT">
-                  <h3>{this.state.currentUser.isPt.toString()}</h3>
                   <form id="notPtForm" onSubmit={this._addPt.bind(this)}>
                     <p>add yourself to your PT's client list</p>
                     <input ref="ptId" type="text" placeholder="PT id"></input>
@@ -249,7 +259,7 @@ class App extends Component {
               )}
             </div>
           )}
-      </div>
+        </div>
       </div>
     )
   }
