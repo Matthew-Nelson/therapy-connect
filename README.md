@@ -2,11 +2,13 @@
 
 An application for physical therapists to connect with their clients. Through this application, therapists can quickly and easily assign their clients personalized routines and exercises for them to complete. Therapy Connect makes it easy for therapists to create and update what routines they want their clients following.
 
-To get started, click here!
+To view the deployed application, click [here](heroku)!
 
 ## How to Use
 
-To use the application, you must create an account as either a therapist or as a client.
+**Getting Started**
+
+To use Therapy Connect, you must create an account as either a therapist or as a client.
 
 **Connecting With a Therapist**
 
@@ -14,7 +16,7 @@ Once a client has created an account and logged in, they will need to add themse
 
 **Creating a Routine**
 
-Creating routines is easy! The given form will allow the therapist to create what workout they want their client doing next. This allows the therapist to have detailed control over what routines their clients are following and allows them to customize routines in between visits to the office.
+Creating routines is easy! The given forms will allow therapists to create what workouts they want their clients doing next. This allows therapists to have detailed control over what routines their clients are following and allows them to customize routines in between visits to the office.
 
 **Completing a routine**
 
@@ -48,6 +50,6 @@ Once the therapist has assigned a client their next routine, it will be waiting 
 * morgan
 
 **Deliverables**
-* Wireframes
-* Story Board
-* Heroku
+* [Wireframes](Wireframes)
+* [Story Board](https://trello.com/b/nKjlyUhb/final-proyecto)
+* [Heroku Deployed App](heroku)
