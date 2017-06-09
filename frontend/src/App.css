@@ -1,5 +1,12 @@
 .App {
   text-align: center;
+  /*background-color: tomato;*/
+  background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5) ), url('background.jpg'), no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height:100vh;
 }
 
 .App-logo {

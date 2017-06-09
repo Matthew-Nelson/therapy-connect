@@ -201,6 +201,9 @@ class App extends Component {
                   <Button type="button" bsStyle="primary" className="btn btn-lg" name='login' onClick={this._setView.bind(this)}>Log In</Button>
                 )}
                 {this.state.loggedIn && (
+                  <Button type="button" bsStyle="primary" className="btn btn-lg" onClick={this._logOut.bind(this)}>User Info</Button>
+                )}
+                {this.state.loggedIn && (
                   <Button type="button" bsStyle="primary" className="btn btn-lg" onClick={this._logOut.bind(this)}>Log Out</Button>
                 )}
               </ButtonGroup>
@@ -279,6 +282,7 @@ class App extends Component {
                         <Jumbotron>
                           <h2>{this.state.loggedIn ? "Welcome " + this.state.currentUser.name + "!": ""}</h2><br></br>
                           <p>Once your physical therapist has given you their Therapy Connect id, enter it into the field below and add yourself to their network.</p>
+                          <p>Your therapist can then send you your next routine to complete.</p>
                           <form id="notPtForm" onSubmit={this._addPt.bind(this)}>
                             <label>Therapist ID</label><br></br>
                             <input ref="ptId" type="text" placeholder="5h3xih1h6..."></input>
@@ -286,22 +290,38 @@ class App extends Component {
                           </form>
                           {this.state.routine.name && (
                             <div>
-                              <h3>routine name: {routine.name}</h3>
-                              <h3>routine date: {routine.completeDate}</h3>
+                              <Grid>
+                                <Row>
+                                  <Col md={4}>
+                                    <h3>{routine.name}</h3>
+                                  </Col>
+                                  <Col md={4}>
+                                    <h3>{routine.completeDate}</h3>
+                                  </Col>
+                                  <Col md={4}>
+                                    <Button type="button" id="compl-btn" className="btn btn-md" bsStyle="primary" onClick={this._deleteRoutine.bind(this, routine.id)}>Mark Complete</Button>
+                                  </Col>
+                                </Row>
+                              </Grid>
+
                               <div>
-                                <p className="rr">routine body: <br></br>{routine.body}</p>
+                                <p className="rr"><br></br>{routine.body}</p>
                                 <style>{"\
                                   .rr{\
                                     white-space: pre-wrap;\
+                                    background-color: white;\
+                                    max-width: 80%;\
+                                    text-align: left;\
+                                    padding-left: 20px;\
+                                    padding-bottom: 20px;\
                                   }\
                                   "}</style>
                                 </div>
-                                <Button type="button" className="btn btn-lg" onClick={this._deleteRoutine.bind(this, routine.id)}>x</Button>
                               </div>
                             )}
                             {!this.state.routine.name && (
                               <div>
-                                <h3>congrats. you dont have to work your fatass out</h3>
+                                <h3>Your therapist is cooking up your next routine as we speak...</h3>
                               </div>
                             )}
                         </Jumbotron>

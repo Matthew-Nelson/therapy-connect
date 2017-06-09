@@ -8,13 +8,8 @@ class Home extends Component {
       <div className='container'>
         <Jumbotron>
           <h1>Welcome to Therapy Connect!</h1>
-          <h3>An application for physical therapists to connect with their clients. Through this application, therapists can quickly and easily assign their clients personalized routines and exercises for them to complete.</h3>
-          <Grid>
-            <Row className='show-grid'>
-            <br></br>
-              <Col xs={12} md={12} lg={12} className="directions-content">Start by logging in or signing up!</Col>
-            </Row>
-          </Grid>
+          <p>An application for physical therapists to connect with their clients. Through this application, therapists can quickly and easily assign their clients personalized routines and exercises for them to complete.</p>
+          <p>Start by logging in or signing up!</p>
         </Jumbotron>
       </div>
     )
