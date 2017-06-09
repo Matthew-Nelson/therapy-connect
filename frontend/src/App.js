@@ -234,7 +234,7 @@ class App extends Component {
                         <Jumbotron className="jumbotron" id="routine-forms">
                           <h2>{this.state.loggedIn ? "Welcome " + this.state.currentUser.name + "!": ""}</h2><br></br>
                           <p>Once your clients have joined your network, you can prescribe them customized and detailed health routines.</p>
-                          <p>Make sure you provide your clients with your id number (located in the user info page) so they can add themselves to your network.</p>
+                          <p>Make sure you provide your clients with your id number (yours is <strong>{this.state.currentUser._id}</strong>) so they can add themselves to your network.</p>
                           <form id="ptForm">
                             <Row className="show-grid">
                               <Col md={4}>

@@ -30,6 +30,24 @@ Once the therapist has assigned a client their next routine, it will be waiting 
 
 ## Technologies
 
-**Backend:** Node.js | Express | Mongo | Javascript Web Tokens
+**Backend:**
+| Node.js | Express | MongoDB |
 
-**Frontend:** React | Axios | React-Bootstrap
+**Frontend:**
+| React | Axios | React-Bootstrap |
+
+**Dependencies**
+* axios
+* jwt-decode
+* bcrypt-nodejs
+* body-parser
+* cors
+* express
+* jsonwebtoken
+* mongoose
+* morgan
+
+**Deliverables**
+* Wireframes
+* Story Board
+* Heroku
