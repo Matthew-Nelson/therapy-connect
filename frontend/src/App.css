@@ -63,3 +63,12 @@ textarea {
 #create-routine {
   margin: 100px 0 100px 0;
 }
+
+.btn {
+  color: black;
+  display: none;
+}
+
+#clientName {
+  min-width: 60%;
+}
