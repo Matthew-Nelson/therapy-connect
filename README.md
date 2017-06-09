@@ -4,6 +4,8 @@ An application for physical therapists to connect with their clients. Through th
 
 To view the deployed application, click [here](https://therapy-connect-client.herokuapp.com/)!
 
+![screenshot](http://imgur.com/OMasMvg)
+
 ## How to Use
 
 **Getting Started**
