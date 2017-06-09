@@ -2,7 +2,7 @@
 
 An application for physical therapists to connect with their clients. Through this application, therapists can quickly and easily assign their clients personalized routines and exercises for them to complete. Therapy Connect makes it easy for therapists to create and update what routines they want their clients following.
 
-To view the deployed application, click [here](heroku)!
+To view the deployed application, click [here](https://therapy-connect-client.herokuapp.com/)!
 
 ## How to Use
 
@@ -36,7 +36,7 @@ Once the therapist has assigned a client their next routine, it will be waiting 
 | Node.js | Express | MongoDB |
 
 **Frontend:**
-| React | Axios | React-Bootstrap |
+HTML/CSS | Javascript | React | Axios | React-Bootstrap |
 
 **Dependencies**
 * axios
@@ -52,4 +52,4 @@ Once the therapist has assigned a client their next routine, it will be waiting 
 **Deliverables**
 * [Wireframes](Wireframes)
 * [Story Board](https://trello.com/b/nKjlyUhb/final-proyecto)
-* [Heroku Deployed App](heroku)
+* [Heroku Deployed App](https://therapy-connect-client.herokuapp.com/)
