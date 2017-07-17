@@ -28,7 +28,7 @@ routinesRouter.route('/:id')
   })
   .post((req, res) => {
     Routine.findById(req.params.id, (err, routine) => {
-      //we will have to give it a button or something with the ed and then push it like that
+      //we will have to give it a button or something with the end and then push it like that
       routine.exercises.push(req.body.exerciseId)
       routine.save((err, routine) => {
         res.json({success: true, message: 'exercise added to routine'})

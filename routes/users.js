@@ -27,6 +27,7 @@ usersRouter.use(serverAuth.authorize)
 
 usersRouter.route('/:id')
   .get(usersCtrl.show)
+  //sending our request through the patch or update funciton
   .patch(usersCtrl.update)
   .delete(usersCtrl.destroy)
   .post(usersCtrl.assignTherapist)
@@ -38,7 +39,5 @@ usersRouter.route('/:clientId/routine')
 usersRouter.route('/:clientId/routine/:routineId')
   .post(usersCtrl.updateRoutine)
 
-// usersRouter.route('/:userId/therapist/:therapistId')
-//   .patch(usersCtrl.assignTherapist)
 
 module.exports = usersRouter
