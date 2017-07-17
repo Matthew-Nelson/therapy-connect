@@ -7,7 +7,9 @@ const
     password: {type: String, select: false},
     routine: {type: mongoose.Schema.Types.ObjectId, ref: 'Routine'},
     isPt: {type: Boolean, default: false},
-    clients: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
+    clients: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+    //updating our model to incluce reviews
+    reviews: [{title: String, client: String, review: String}]
   })
 
 // this function will take a string and encrypt it with bcrypt:

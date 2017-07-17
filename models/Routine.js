@@ -4,8 +4,9 @@ const
     name: String,
     body: String,
     //exercises: [{type: mongoose.Schema.Types.ObjectId, ref: 'Exercise'}],
-    completeDate: String
+    completeDate: String,
     //completed: {type: Boolean, default: false}
+    therapistId: String
   })
 
 const Routine = mongoose.model('Routine', routineSchema)
